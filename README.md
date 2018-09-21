@@ -1,9 +1,15 @@
 # Elastic search 101
 
+```
+bash mapping.bash
+python myindex.py
+```
+
 ## Requirement
 - python 3
 - Java
 - chrome extension: elasticsearch-head
+- สำหรับผู้ใช้ windows แนะนำให้ลง linux subsystem หรือ git bash
 
 ## วิธีการ search ให้พิมพ์ลง url ของ browser หรือใช้คำสั่ง curl
 แบบปกติ
