@@ -1,10 +1,10 @@
 curl -XPUT 'localhost:9200/ku?pretty' -H 'Content-Type: application/json' -d'
 {
-    "settings" : {
-      "number_of_shards": 3,
-      "number_of_replicas": 0
-    },
-    "mappings" : {
+	"settings" : {
+		"number_of_shards": 3,
+		"number_of_replicas": 0
+	},
+  "mappings" : {
 		"webpage": {
 			"properties": {
 				"BaseUrl": {"type" : "keyword"},
@@ -19,5 +19,5 @@ curl -XPUT 'localhost:9200/ku?pretty' -H 'Content-Type: application/json' -d'
 				}
 			}
 		}
- 	 }
+ 	}
 }'
