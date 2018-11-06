@@ -1,4 +1,4 @@
-curl -XPUT 'localhost:9200/ku?pretty' -H 'Content-Type: application/json' -d'
+curl -XPUT 'localhost:9200/mobile?pretty' -H 'Content-Type: application/json' -d'
 {
 	"settings" : {
 		"number_of_shards": 3,
@@ -7,17 +7,18 @@ curl -XPUT 'localhost:9200/ku?pretty' -H 'Content-Type: application/json' -d'
   "mappings" : {
 		"webpage": {
 			"properties": {
-				"BaseUrl": {"type" : "keyword"},
-				"Url": {"type" : "keyword"},
-				"Title": {"type" : "text", "analyzer": "thai"},
-				"Body": {"type" : "text", "analyzer": "thai"},
-				"Encoding": {"type" : "keyword"},
-				"Links": {"type" : "keyword"},
-				"Crawling_date": {
-					"type": "date",
-					"format": "yyyy-MM-dd HH:mm:ss"
+				{
+					"link": {"type" : "keyword"},
+					"title": {"type" : "text"}, 
+					"domain_name": {"type" : "keyword"}, 
+					"base_url": {"type" : "keyword"}, 
+					"text": {"type" : "text"},
+					"remove_stopword_word_tokens": "listword already removed stopword (using nltk)",
+					"remove_stopword_text":  {"type" : "text"}
 				}
 			}
 		}
  	}
 }'
+
+
