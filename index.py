@@ -84,7 +84,7 @@ class my_elasticSearch():
          self.indexDoc(i)
          nbD += 1
          if nbD % 1000 == 0:
-            print('nbD', end='')
+            print(nbD)
       print('\n', nbD, 'document(s) indexed.')
       end_time = time.time()
       print('Running time: ', str(end_time-start_time), 'seconds.')

@@ -9,7 +9,7 @@ class searcher():
    def __init__(self):
       pass
 
-   def search(self,query, sum_op = 'url'):
+   def search(self,query, sum_op = 'url',SENTENCES_COUNT=2):
       url = self.localhost + self.search_url + query
       r = requests.get(url)
       res_raw = json.loads(r.text)
@@ -17,11 +17,11 @@ class searcher():
 
       for one_res in res_raw['hits']['hits']:
          one_res_source = one_res['_source']
-         one_res_source['_score'] = one_res['_score']
+         one_res_source['score'] = one_res['_score']
          del one_res_source['remove_stopword_text']
          
          if sum_op != 'no':
-            one_res_source['summarize'] = summarizer(one_res_source, op = sum_op)
+            one_res_source['summary'] = summarizer(one_res_source, op = sum_op,SENTENCES_COUNT)
          
          search_result.append(one_res_source) 
       return search_result
