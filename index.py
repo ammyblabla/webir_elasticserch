@@ -4,6 +4,7 @@ import time
 from elasticsearch import Elasticsearch
 import pathlib
 import codecs
+from pymongo import MongoClient
 
 
 def get_dataset_filename():
@@ -14,7 +15,25 @@ def get_dataset_filename():
       currentFiles.append(str(currentFile))
    return currentFiles
 
-def get_json():
+def get_json_db(database, collection):
+   client = MongoClient()
+   # db = client['mobile_search']
+   # collection = db['docs']
+   db = client[database]
+   collection = db[collection]
+   all_docs = []
+   nbD = 0
+   for docs in collection.find():
+      all_docs.append(docs)
+      del docs['_id']
+      nbD += 1
+      if nbD % 1000 == 0:
+         print(nbD)
+   client.close()
+   return all_docs
+
+
+def get_json_file():
    filenames = get_dataset_filename()
    all_list = []
    for filename in filenames:
@@ -42,25 +61,28 @@ def indexDoc(doc):
    res = es.index(index=INDEX, doc_type = DOCTYPE, id=myid, body=doc)
    return True
 
-JSONdocs = get_json()
-print('finish read file')
-# print(len(all_list))
+if __name__ == "__main__":
+   JSONdocs = get_json_file()
+   # JSONdocs = get_json_db('mobile_search','docs')
+   print('finish read file')
+   # print(len(all_list))
 
-ES_HOST = 'http://localhost:9200/'
-INDEX = 'mobile'; DOCTYPE = 'webpage'
-es = Elasticsearch()
+   ES_HOST = 'http://localhost:9200/'
+   INDEX = 'mobile'; DOCTYPE = 'webpage'
+   es = Elasticsearch()
 
-start_time = time.time()
-nbD = 0
-for i in JSONdocs:
-#     i['remove_stopword_word_tokens'] = ''
-   del i['remove_stopword_word_tokens']
-   indexDoc(i)
-   nbD += 1
-   if nbD%100==0:
-      print(',', end='')
-print('\n', nbD, 'document(s) indexed.')
-end_time = time.time()
-print('Running time: ', str(end_time-start_time), 'seconds.')
+   start_time = time.time()
+   nbD = 0
+   print('indexing.....')
+   for i in JSONdocs:
+   #     i['remove_stopword_word_tokens'] = ''
+      del i['remove_stopword_word_tokens']
+      indexDoc(i)
+      nbD += 1
+      if nbD % 1000 == 0:
+         print('nbD', end='')
+   print('\n', nbD, 'document(s) indexed.')
+   end_time = time.time()
+   print('Running time: ', str(end_time-start_time), 'seconds.')
 
 # print(get_dataset_filename())
