@@ -1,5 +1,6 @@
 import requests
 import json
+from summarizer import summarizer
 
 localhost = 'http://localhost:9200/'
 search_url = '_search?q='
