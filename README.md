@@ -4,8 +4,8 @@
 
 - Java
 - elasticsearch 5.6
-- Other Python library requirement is in requirement.txt already.
 - ElasticSearch Head (Chrome Extension) (optional)
+- Other Python library requirement is in requirement.txt already.
 
 ```bash
 pip install -r /path/to/requirements.txt
