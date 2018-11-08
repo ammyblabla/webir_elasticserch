@@ -2,16 +2,23 @@ import requests
 import json
 from summarizer import summarizer
 
-localhost = 'http://localhost:9200/'
-search_url = '_search?q='
-query = 'note 9'
+class searcher():
+   localhost = 'http://localhost:9200/'
+   search_url = '_search?q='
 
-url = localhost + search_url + query
-r = requests.get(url)
-res_raw = json.loads(r.text)
-search_result = []
+   def __init__(self):
+      pass
 
-for one_res in res_raw['hits']['hits']:
-   one_res_source = one_res['_source']
-   one_res_source['_score'] = one_res['_score']
-   search_result.append(one_res_source) 
+   def search(self,query):
+      url = self.localhost + self.search_url + query
+      r = requests.get(url)
+      res_raw = json.loads(r.text)
+      search_result = []
+
+      for one_res in res_raw['hits']['hits']:
+         one_res_source = one_res['_source']
+         one_res_source['_score'] = one_res['_score']
+         one_res_source['summarize'] = summarizer(one_res_source['link'])
+         del one_res_source['remove_stopword_text']
+         search_result.append(one_res_source) 
+      return search_result

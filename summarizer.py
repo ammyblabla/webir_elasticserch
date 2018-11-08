@@ -23,7 +23,7 @@ def summarizer(url, SENTENCES_COUNT=2):
 
    sentences = []
    for sentence in summarizer(parser.document, SENTENCES_COUNT):
-      print(sentence)
+      # print(sentence)
       sentences.append(str(sentence))
    return sentences
 
