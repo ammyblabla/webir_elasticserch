@@ -5,6 +5,7 @@
 - Java
 - elasticsearch 5.6
 - ElasticSearch Head (Chrome Extension) (optional)
+- Git Bash or something that can run bash file
 - Other Python library requirement is in requirement.txt already.
 
 ```bash
@@ -29,10 +30,17 @@ pip install -r /path/to/requirements.txt
 
 - รันแค่ครั้งแรกที่ทำบนเครื่อง
 - ใช้เวลารันประมาณ 9-10 นาทีทั้งสองแบบ
+- ต้องรัน mapping ก่อน
+   - ในกรณีคนใช้ windows แนะนำให้รันบน git bash
+- delete index ได้ใน chrome extension: ElasticSearch Head
+
+```bash
+bash mapping.bash
+```
 
 ```python
 from index import my_elasticSearch
-els_obj = my_elasticSearch(option = 'db')
+els_obj = my_elasticSearch(option = 'file')
 ```
 
 ## search
@@ -40,7 +48,9 @@ els_obj = my_elasticSearch(option = 'db')
 
 ```python
 from search import searcher
-result = search(self,query, sum_op = 'url', SENTENCES_COUNT=2)
+obj = searcher()
+query = 'note9'
+result = obj.search(query, sum_op = 'text', SENTENCES_COUNT=2)
 ```
 
 -  sum_op option ที่ใช้ทำสรุปจาก sumy เผื่อเอาไปโชว์หน้าเว็บ
@@ -50,7 +60,9 @@ result = search(self,query, sum_op = 'url', SENTENCES_COUNT=2)
 
 - SENTENCES_COUNT จำนวนประโยคที่ให้ sumy สรุปมาให้
 
--  output list ของไฟล์ json เหมือนที่เราเก็บมา
-   -  ตัด remove_stopword_text ทิ้ง
-   -  เพิ่ม result['score'] เป็นคะแนนจาก elasticSearch
-   -  เพิ่ม result['summary'] สรุปหน้าเว็บในกรณี sum_op != no
+- output list ของไฟล์ json เหมือนที่เราเก็บมา
+ - ตัด remove_stopword_text ทิ้ง
+ - เพิ่ม result['score'] เป็นคะแนนจาก elasticSearch
+ - เพิ่ม result['summary'] สรุปหน้าเว็บในกรณี sum_op != no
+
+### สามารถดูตัวอย่างโค้ดเต็มๆ ที่ test_search.py และ test_setting.py
