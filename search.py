@@ -21,12 +21,11 @@ class searcher():
          del one_res_source['remove_stopword_text']
          
          if sum_op != 'no':
-            one_res_source['summary'] = summarizer(one_res_source, op = sum_op,SENTENCES_COUNT)
-         
+            one_res_source['summary'] = summarizer(one_res_source, SENTENCES_COUNT=SENTENCES_COUNT, op = sum_op)
          search_result.append(one_res_source) 
       return search_result
 
-if __name__ == "__main__":
-   obj = searcher()
-   q = 'note9'
-   print(obj.search(q,sum_op='text'))
+# if __name__ == "__main__":
+#    obj = searcher()
+#    q = 'note9'
+#    print(obj.search(q,sum_op='text'))
